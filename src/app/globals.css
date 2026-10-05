@@ -1,26 +1,640 @@
 @import "tailwindcss";
 
+/* =========================================================
+   AQUASENTINEL LABS — DESIGN SYSTEM
+   Intelligent Aquaculture / Water / AI
+========================================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ---------------------------------------------------------
+     BACKGROUNDS
+  --------------------------------------------------------- */
+  --background: #f4f8f6;
+  --surface: #ffffff;
+  --surface-soft: #eaf3f1;
+  --surface-aqua: #dff4f0;
+
+  /* ---------------------------------------------------------
+     OCEAN / BRAND
+  --------------------------------------------------------- */
+  --navy: #062f35;
+  --navy-deep: #031f25;
+  --navy-soft: #0b4148;
+  --navy-mid: #0e5057;
+
+  --teal: #0f8f87;
+  --teal-dark: #08756f;
+  --teal-light: #dff4f0;
+  --aqua: #63d5c8;
+  --aqua-soft: #9ae6dd;
+
+  /* ---------------------------------------------------------
+     TYPOGRAPHY
+  --------------------------------------------------------- */
+  --foreground: #092b31;
+  --muted: #60777a;
+  --muted-light: #8ca1a2;
+  --muted-dark: #405b60;
+
+  /* Next.js font variables */
+  --font-body: var(--font-inter);
+  --font-display: var(--font-manrope);
+
+  /* ---------------------------------------------------------
+     BORDERS
+  --------------------------------------------------------- */
+  --border: #d9e8e5;
+  --border-dark: rgba(255, 255, 255, 0.12);
+  --border-teal: rgba(15, 143, 135, 0.24);
+
+  /* ---------------------------------------------------------
+     STATUS
+  --------------------------------------------------------- */
+  --success: #35b77b;
+  --warning: #e6a93a;
+  --danger: #dc6262;
+
+  /* ---------------------------------------------------------
+     MOTION
+  --------------------------------------------------------- */
+  --ease-aqua: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+/* =========================================================
+   BASE
+========================================================= */
+
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background: var(--background);
 }
 
 body {
+  margin: 0;
+  min-height: 100vh;
+
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+  font-family:
+    var(--font-body),
+    "Inter",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
+
+.font-display {
+  font-family:
+    var(--font-display),
+    "Manrope",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+
+/* =========================================================
+   SELECTION
+========================================================= */
+
+::selection {
+  background: var(--teal);
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--teal);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--teal-dark);
+}
+
+
+/* =========================================================
+   AQUATIC FLOATING MOTION
+========================================================= */
+
+@keyframes aqua-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -12px, 0);
+  }
+}
+
+@keyframes aqua-float-slow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(8px, -18px, 0);
+  }
+}
+
+@keyframes aqua-float-side {
+  0%,
+  100% {
+    transform: translate3d(-8px, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(12px, -10px, 0);
+  }
+}
+
+
+/* =========================================================
+   WATER BUBBLES
+========================================================= */
+
+@keyframes aqua-bubble {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 25px, 0) scale(0.65);
+  }
+
+  15% {
+    opacity: 0.55;
+  }
+
+  55% {
+    opacity: 0.4;
+  }
+
+  80% {
+    opacity: 0.18;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(12px, -220px, 0) scale(1);
+  }
+}
+
+@keyframes aqua-bubble-drift {
+  0% {
+    transform: translate3d(0, 20px, 0) scale(0.7);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translate3d(-8px, -100px, 0) scale(0.9);
+  }
+
+  100% {
+    transform: translate3d(14px, -230px, 0) scale(1);
+    opacity: 0;
+  }
+}
+
+
+/* =========================================================
+   WATER RIPPLE
+========================================================= */
+
+@keyframes aqua-ripple {
+  0% {
+    transform: scale(0.75);
+    opacity: 0.65;
+  }
+
+  70% {
+    transform: scale(1.25);
+    opacity: 0.12;
+  }
+
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+@keyframes aqua-ripple-soft {
+  0%,
+  100% {
+    transform: scale(0.96);
+    opacity: 0.2;
+  }
+
+  50% {
+    transform: scale(1.04);
+    opacity: 0.45;
+  }
+}
+
+
+/* =========================================================
+   DATA / AI PULSE
+========================================================= */
+
+@keyframes aqua-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.95);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+}
+
+@keyframes aqua-signal {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+
+
+/* =========================================================
+   WATER SURFACE MOVEMENT
+========================================================= */
+
+@keyframes aqua-drift {
+  0% {
+    transform: translateX(-3%);
+  }
+
+  50% {
+    transform: translateX(3%);
+  }
+
+  100% {
+    transform: translateX(-3%);
+  }
+}
+
+@keyframes aqua-wave {
+  0% {
+    transform: translateX(-2%) scaleY(1);
+  }
+
+  50% {
+    transform: translateX(2%) scaleY(1.04);
+  }
+
+  100% {
+    transform: translateX(-2%) scaleY(1);
+  }
+}
+
+
+/* =========================================================
+   FISH / AQUATIC MOVEMENT
+========================================================= */
+
+@keyframes aqua-swim {
+  0% {
+    transform: translate3d(-10%, 0, 0);
+  }
+
+  25% {
+    transform: translate3d(5%, -8px, 0);
+  }
+
+  50% {
+    transform: translate3d(18%, 4px, 0);
+  }
+
+  75% {
+    transform: translate3d(5%, -5px, 0);
+  }
+
+  100% {
+    transform: translate3d(-10%, 0, 0);
+  }
+}
+
+@keyframes aqua-swim-reverse {
+  0% {
+    transform: translate3d(10%, 0, 0) scaleX(-1);
+  }
+
+  25% {
+    transform: translate3d(-5%, -7px, 0) scaleX(-1);
+  }
+
+  50% {
+    transform: translate3d(-18%, 5px, 0) scaleX(-1);
+  }
+
+  75% {
+    transform: translate3d(-5%, -4px, 0) scaleX(-1);
+  }
+
+  100% {
+    transform: translate3d(10%, 0, 0) scaleX(-1);
+  }
+}
+
+
+/* =========================================================
+   MICRO PARTICLES
+========================================================= */
+
+@keyframes aqua-particle {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+
+  30% {
+    opacity: 0.35;
+  }
+
+  70% {
+    opacity: 0.2;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(12px, -80px, 0);
+  }
+}
+
+
+/* =========================================================
+   UTILITY CLASSES
+========================================================= */
+
+.aqua-float {
+  animation: aqua-float 5s ease-in-out infinite;
+}
+
+.aqua-float-slow {
+  animation: aqua-float-slow 8s ease-in-out infinite;
+}
+
+.aqua-float-side {
+  animation: aqua-float-side 7s ease-in-out infinite;
+}
+
+.aqua-bubble {
+  animation: aqua-bubble 7s ease-in infinite;
+}
+
+.aqua-bubble-drift {
+  animation: aqua-bubble-drift 8s ease-in infinite;
+}
+
+.aqua-pulse {
+  animation: aqua-pulse 3s ease-in-out infinite;
+}
+
+.aqua-signal {
+  animation: aqua-signal 3s ease-out infinite;
+}
+
+.aqua-ripple {
+  animation: aqua-ripple 3s ease-out infinite;
+}
+
+.aqua-ripple-soft {
+  animation: aqua-ripple-soft 4s ease-in-out infinite;
+}
+
+.aqua-drift {
+  animation: aqua-drift 10s ease-in-out infinite;
+}
+
+.aqua-wave {
+  animation: aqua-wave 9s ease-in-out infinite;
+}
+
+.aqua-swim {
+  animation: aqua-swim 18s ease-in-out infinite;
+}
+
+.aqua-swim-reverse {
+  animation: aqua-swim-reverse 22s ease-in-out infinite;
+}
+
+.aqua-particle {
+  animation: aqua-particle 8s ease-in infinite;
+}
+
+
+/* =========================================================
+   GLASS / AQUATIC SURFACES
+========================================================= */
+
+.aqua-glass {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.aqua-glass-light {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* =========================================================
+   AQUATIC GRID
+========================================================= */
+
+.aqua-grid {
+  background-image:
+    linear-gradient(
+      rgba(99, 213, 200, 0.06) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(99, 213, 200, 0.06) 1px,
+      transparent 1px
+    );
+
+  background-size: 48px 48px;
+}
+
+
+/* =========================================================
+   DATA DOT FIELD
+========================================================= */
+
+.aqua-dots {
+  background-image:
+    radial-gradient(
+      circle,
+      rgba(99, 213, 200, 0.22) 1px,
+      transparent 1px
+    );
+
+  background-size: 28px 28px;
+}
+
+
+/* =========================================================
+   GLOW
+========================================================= */
+
+.aqua-glow {
+  box-shadow:
+    0 0 0 1px rgba(99, 213, 200, 0.08),
+    0 0 60px rgba(15, 143, 135, 0.14);
+}
+
+.aqua-glow-small {
+  box-shadow:
+    0 0 0 1px rgba(99, 213, 200, 0.08),
+    0 0 24px rgba(15, 143, 135, 0.16);
+}
+
+
+/* =========================================================
+   HOVER MOTION
+========================================================= */
+
+.aqua-hover {
+  transition:
+    transform 500ms var(--ease-aqua),
+    border-color 500ms var(--ease-aqua),
+    background-color 500ms var(--ease-aqua),
+    box-shadow 500ms var(--ease-aqua);
+}
+
+.aqua-hover:hover {
+  transform: translateY(-5px);
+}
+
+
+/* =========================================================
+   FADE / REVEAL SUPPORT
+========================================================= */
+
+@keyframes aqua-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.aqua-fade-up {
+  animation: aqua-fade-up 800ms var(--ease-aqua) both;
+}
+
+
+/* =========================================================
+   RESPONSIVE TYPE
+========================================================= */
+
+@media (max-width: 768px) {
+  .aqua-grid {
+    background-size: 32px 32px;
+  }
+
+  .aqua-dots {
+    background-size: 22px 22px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
