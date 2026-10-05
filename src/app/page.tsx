@@ -1,4 +1,10 @@
+"use client";
+
+import { useState } from "react";
+
 export default function Home() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const navItems = [
     ["The Sentinel", "#sentinel"],
     ["Solutions", "#solutions"],
@@ -160,6 +166,24 @@ export default function Home() {
           }
         }
 
+        @keyframes bubbleRiseThree {
+          0% {
+            transform: translateY(50px) translateX(0) scale(.65);
+            opacity: 0;
+          }
+          18% {
+            opacity: .45;
+          }
+          55% {
+            transform: translateY(-70px) translateX(-12px) scale(.9);
+            opacity: .32;
+          }
+          100% {
+            transform: translateY(-210px) translateX(18px) scale(1.05);
+            opacity: 0;
+          }
+        }
+
         @keyframes particleFloat {
           0%, 100% {
             transform: translateY(0) translateX(0);
@@ -265,6 +289,10 @@ export default function Home() {
           animation: bubbleRiseTwo 10s ease-in infinite;
         }
 
+        .bubble-three {
+          animation: bubbleRiseThree 12s ease-in infinite;
+        }
+
         .particle-float {
           animation: particleFloat 6s ease-in-out infinite;
         }
@@ -312,6 +340,7 @@ export default function Home() {
           .water-wave-two,
           .bubble-one,
           .bubble-two,
+          .bubble-three,
           .particle-float,
           .sensor-pulse,
           .scan-line,
@@ -330,7 +359,7 @@ export default function Home() {
       ========================================================= */}
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-[var(--navy-deep)]/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
-          <a href="/" className="flex items-center gap-3">
+          <a href="/" className="flex items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
             <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl bg-white">
               <img
                 src="/aquasentinel-logo.jpg"
@@ -363,12 +392,55 @@ export default function Home() {
             ))}
           </div>
 
-          <a
-            href="#pilot"
-            className="rounded-full border border-[var(--aqua)]/25 bg-[var(--teal)]/10 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--aqua)] transition duration-300 hover:border-[var(--aqua)]/50 hover:bg-[var(--teal)]/20"
-          >
-            Join the Pilot
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href="#pilot"
+              className="hidden rounded-full border border-[var(--aqua)]/25 bg-[var(--teal)]/10 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--aqua)] transition duration-300 hover:border-[var(--aqua)]/50 hover:bg-[var(--teal)]/20 sm:inline-flex"
+            >
+              Join the Pilot
+            </a>
+
+            <button
+              type="button"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
+              onClick={() => setMobileMenuOpen((open) => !open)}
+              className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition duration-300 hover:border-[var(--aqua)]/30 hover:bg-white/10 lg:hidden"
+            >
+              <span className="sr-only">{mobileMenuOpen ? "Close menu" : "Open menu"}</span>
+              <span className="relative flex h-5 w-5 flex-col justify-center gap-1.5">
+                <span className={`block h-px w-5 bg-[var(--aqua)] transition duration-300 ${mobileMenuOpen ? "translate-y-2 rotate-45" : ""}`} />
+                <span className={`block h-px w-5 bg-[var(--aqua)] transition duration-300 ${mobileMenuOpen ? "opacity-0" : ""}`} />
+                <span className={`block h-px w-5 bg-[var(--aqua)] transition duration-300 ${mobileMenuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div
+          className={`border-t border-white/10 bg-[var(--navy-deep)]/98 px-5 transition-all duration-300 lg:hidden ${mobileMenuOpen ? "max-h-[420px] py-4 opacity-100" : "pointer-events-none max-h-0 overflow-hidden py-0 opacity-0"}`}
+        >
+          <div className="mx-auto max-w-7xl space-y-1">
+            {navItems.map(([label, href]) => (
+              <a
+                key={label}
+                href={href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between rounded-xl px-4 py-3.5 text-sm font-medium text-white/65 transition duration-300 hover:bg-white/5 hover:text-[var(--aqua)]"
+              >
+                <span>{label}</span>
+                <span className="text-[var(--aqua)]/50">→</span>
+              </a>
+            ))}
+
+            <a
+              href="#pilot"
+              onClick={() => setMobileMenuOpen(false)}
+              className="mt-2 flex items-center justify-center rounded-xl bg-[var(--teal)] px-4 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-white transition duration-300 hover:bg-[var(--aqua)] hover:text-[var(--navy-deep)]"
+            >
+              Join the Pilot
+            </a>
+          </div>
         </div>
       </nav>
 
@@ -392,26 +464,15 @@ export default function Home() {
 
           <div className="water-wave-two absolute bottom-[8%] left-[-5%] h-36 w-[110%] rounded-[50%] border-t border-white/5" />
 
-          {/* Bubbles */}
-          <div
-            className="bubble-one absolute bottom-[10%] left-[15%] h-3 w-3 rounded-full border border-[var(--aqua)]/25"
-            style={{ animationDelay: "1s" }}
-          />
-
-          <div
-            className="bubble-two absolute bottom-[15%] left-[32%] h-5 w-5 rounded-full border border-white/10"
-            style={{ animationDelay: "3s" }}
-          />
-
-          <div
-            className="bubble-one absolute bottom-[8%] right-[18%] h-4 w-4 rounded-full border border-[var(--aqua)]/20"
-            style={{ animationDelay: "2s" }}
-          />
-
-          <div
-            className="bubble-two absolute bottom-[18%] right-[32%] h-2.5 w-2.5 rounded-full border border-[var(--aqua)]/20"
-            style={{ animationDelay: "4s" }}
-          />
+          {/* Bubbles — varied sizes make the water movement more obvious */}
+          <div className="bubble-one absolute bottom-[8%] left-[13%] h-3 w-3 rounded-full border border-[var(--aqua)]/30 bg-[var(--aqua)]/5" style={{ animationDelay: "1s" }} />
+          <div className="bubble-two absolute bottom-[12%] left-[24%] h-7 w-7 rounded-full border border-white/15 bg-white/5" style={{ animationDelay: "3.5s" }} />
+          <div className="bubble-three absolute bottom-[6%] left-[35%] h-4 w-4 rounded-full border border-[var(--aqua)]/25 bg-[var(--aqua)]/5" style={{ animationDelay: "5s" }} />
+          <div className="bubble-one absolute bottom-[14%] left-[47%] h-10 w-10 rounded-full border border-[var(--aqua)]/20 bg-[var(--aqua)]/5" style={{ animationDelay: "2.2s" }} />
+          <div className="bubble-two absolute bottom-[7%] right-[39%] h-5 w-5 rounded-full border border-white/15 bg-white/5" style={{ animationDelay: "4.5s" }} />
+          <div className="bubble-three absolute bottom-[16%] right-[29%] h-9 w-9 rounded-full border border-[var(--aqua)]/25 bg-[var(--aqua)]/5" style={{ animationDelay: "1.8s" }} />
+          <div className="bubble-one absolute bottom-[9%] right-[18%] h-3.5 w-3.5 rounded-full border border-[var(--aqua)]/25 bg-[var(--aqua)]/5" style={{ animationDelay: "6s" }} />
+          <div className="bubble-two absolute bottom-[19%] right-[9%] h-6 w-6 rounded-full border border-white/15 bg-white/5" style={{ animationDelay: "2.8s" }} />
 
           {/* Floating particles */}
           {[
@@ -1677,22 +1738,22 @@ export default function Home() {
           <div className="absolute inset-0 aqua-grid opacity-20" />
 
           <div
-            className="bubble-one absolute bottom-[18%] left-[10%] h-4 w-4 rounded-full border border-[var(--aqua)]/30"
+            className="bubble-one absolute bottom-[18%] left-[10%] h-7 w-7 rounded-full border border-[var(--aqua)]/30 bg-[var(--aqua)]/5"
             style={{ animationDelay: "1s" }}
           />
 
           <div
-            className="bubble-two absolute bottom-[8%] left-[22%] h-6 w-6 rounded-full border border-white/15"
+            className="bubble-two absolute bottom-[8%] left-[22%] h-12 w-12 rounded-full border border-white/15 bg-white/5"
             style={{ animationDelay: "3s" }}
           />
 
           <div
-            className="bubble-one absolute right-[14%] top-[18%] h-5 w-5 rounded-full border border-[var(--aqua)]/25"
+            className="bubble-one absolute right-[14%] top-[18%] h-9 w-9 rounded-full border border-[var(--aqua)]/25 bg-[var(--aqua)]/5"
             style={{ animationDelay: "2s" }}
           />
 
           <div
-            className="bubble-two absolute bottom-[12%] right-[24%] h-3 w-3 rounded-full border border-[var(--aqua)]/25"
+            className="bubble-three absolute bottom-[12%] right-[24%] h-5 w-5 rounded-full border border-[var(--aqua)]/25 bg-[var(--aqua)]/5"
             style={{ animationDelay: "4s" }}
           />
         </div>
